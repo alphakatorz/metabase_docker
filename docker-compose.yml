@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+
+  # Metabase + PostgreSQL services
+
+  metabase:
+    image: metabase/metabase
+    ports:
+      - 3000:3000
+    depends_on:
+      - metabase_db
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: $MB_DB_ADMIN
+      MB_DB_PASS: $MB_DB_PASSWORD
+      MB_DB_HOST: metabase_db
+  
+  metabase_db:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_USER: $MB_DB_ADMIN
+      POSTGRES_PASSWORD: $MB_DB_PASSWORD
+      POSTGRES_DB: metabase
+      
