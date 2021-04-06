@@ -5,6 +5,7 @@ services:
   # Metabase + PostgreSQL services
 
   metabase:
+    container_name: metabase
     image: metabase/metabase
     ports:
       - 3000:3000
@@ -19,9 +20,15 @@ services:
       MB_DB_HOST: metabase_db
   
   metabase_db:
+    container_name: metabase_db
     image: postgres:10-alpine
     environment:
       POSTGRES_USER: $MB_DB_ADMIN
       POSTGRES_PASSWORD: $MB_DB_PASSWORD
       POSTGRES_DB: metabase
       
+
+networks: 
+  default: 
+    external: 
+      name: datafuel-local-network
